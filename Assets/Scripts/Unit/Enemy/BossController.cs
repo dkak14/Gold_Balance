@@ -13,19 +13,23 @@ public class BossController : EnemyController
     [SerializeField] Vector2 bulletOffSet;
     [SerializeField] float attackCul1;
     [Header("Fast Attack")]
+    [SerializeField] int fastDamage;
     [SerializeField] float bulletSpread1;
     [SerializeField] float buletRange1;
     [SerializeField] int attackCount1;
     [SerializeField] float attackSpeed1;
     [Header("Slow Attack")]
+    [SerializeField] int slowDamage;
     [SerializeField] float bulletSpread2;
     [SerializeField] float buletRange2;
     [SerializeField] int attackCount2;
     [SerializeField] float attackSpeed2;
     [Header("<Phase 2>")]
     [SerializeField] RuntimeAnimatorController phase2Controller;
+    [SerializeField] int phase2Damage;
     [SerializeField] float phase2AttackRange;
     [SerializeField] float attackCul2;
+    [SerializeField] float attack2Delay;
     [SerializeField] Vector2 attackOffset;
     [SerializeField] Vector2 attackSize;
     [SerializeField] SpriteRenderer deadBody;
@@ -41,7 +45,6 @@ public class BossController : EnemyController
     Coroutine phase1AttackRoutine;
     protected override void Awake() {
         base.Awake();
-        hpValueChange += PhaseTwoCondition;
 
         int bulletLineCount = Mathf.Max(attackCount2, attackCount1);
 
@@ -108,13 +111,13 @@ public class BossController : EnemyController
     IEnumerator C_PhaseTwoAttack() {
         moveController.isMove = false;
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(attack2Delay);
         animator.SetTrigger("Attack");
         Vector2 point = spriteRenderer.flipX ? new Vector2(-attackOffset.x, attackOffset.y) : attackOffset;
         Collider2D player = Physics2D.OverlapBox((Vector2)transform.position + point, attackSize, 0, 1 << LayerMask.NameToLayer("Player"));
         UnitControllerBase unit;
         if (player && player.TryGetComponent(out unit)) {
-            unit.Damaged(damage, this, WeaponType.NULL);
+            unit.Damaged(phase2Damage, this, WeaponType.NULL);
         }
 
         yield return new WaitForSeconds(1);
@@ -148,35 +151,35 @@ public class BossController : EnemyController
     }
     void FastAttack() {
         StartCoroutine(C_AttackDelay(1));
-        phase1AttackRoutine = StartCoroutine(C_ShotBulletAttack(attackCount1, bulletSpread1, buletRange1, attackSpeed1));
+        phase1AttackRoutine = StartCoroutine(C_ShotBulletAttack(fastDamage, attackCount1, bulletSpread1, buletRange1, attackSpeed1));
     }
     void SlowAttack() {
         StartCoroutine(C_AttackDelay(3));
-        phase1AttackRoutine = StartCoroutine(C_ShotSlowBulletAttack(bulletSpread2, buletRange2, attackSpeed2));
+        phase1AttackRoutine = StartCoroutine(C_ShotSlowBulletAttack(slowDamage, bulletSpread2, buletRange2, attackSpeed2));
     }
-    IEnumerator C_ShotBulletAttack(int count, float spread, float range, float delay) {
+    IEnumerator C_ShotBulletAttack(int damage, int count, float spread, float range, float delay) {
         animator.Play("Boss_Phase1_Attack", 0, 0);
         animator.speed = 0;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1);
         animator.speed = 1;
         WaitForSeconds wait = new WaitForSeconds(delay);
         for(int i = 0; i < count; i++) {
             animator.Play("Boss_Phase1_Attack", 0, 0);
-            ShotBullet(spread, range, bulletColor1);
+            ShotBullet(damage, spread, range, bulletColor1);
             yield return wait;
         }
         attackcul1 = attackCul1;
     }
-    IEnumerator C_ShotSlowBulletAttack(float spread, float range, float delay) {
+    IEnumerator C_ShotSlowBulletAttack(int damage,float spread, float range, float delay) {
         animator.Play("Boss_Phase1_Attack", 0, 0);
         animator.speed = 0;
         yield return new WaitForSeconds(delay);
         animator.speed = 1;
-        ShotBullet(spread, range, bulletColor2);
+        ShotBullet(damage, spread, range, bulletColor2);
         attackcul1 = attackCul1;
     }
-    void ShotBullet(float spread, float range, Color color) {
+    void ShotBullet(int damage,float spread, float range, Color color) {
         Vector2 offSet = spriteRenderer.flipX ? new Vector2(-bulletOffSet.x, bulletOffSet.y) : bulletOffSet;
         float angle = Random.Range(-spread, spread);
         float bulletdirAngle = spriteRenderer.flipX ? 180 : 0;
@@ -242,7 +245,7 @@ public class BossController : EnemyController
         SetActiveState(UnitAnimState.Cinematic, true);
         moveController.isMove = false;
         deadBody.flipX = spriteRenderer.flipX;
-        deadBody.transform.position = transform.position;
+        deadBody.transform.position = transform.position - Vector3.right * 0.085f;
         EventManager.Instance.TriggerEventMessage("BossDie");
     }
     protected override void OnDrawGizmos() {

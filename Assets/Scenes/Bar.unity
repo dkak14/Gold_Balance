@@ -962,7 +962,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
@@ -32986,10 +32985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b4bea95780f8844ba5823bf3116d439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backGround:
-  - {fileID: 1741396003}
-  - {fileID: 26361124}
-  - {fileID: 0}
+  spriteRenderer: {fileID: 0}
   speed: -0.5
   boundX: 0
   startX: 0
@@ -33179,11 +33175,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3594533136241919782, guid: e8d8d57aa9f3f4641b524749707d87c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.87
+      value: -0.81
       objectReference: {fileID: 0}
     - target: {fileID: 3594533136241919782, guid: e8d8d57aa9f3f4641b524749707d87c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.67
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 3594533136241919782, guid: e8d8d57aa9f3f4641b524749707d87c8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -34258,10 +34254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b4bea95780f8844ba5823bf3116d439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backGround:
-  - {fileID: 2076797766}
-  - {fileID: 2096989811}
-  - {fileID: 254356797}
+  spriteRenderer: {fileID: 0}
   speed: -1
   boundX: 0
   startX: 0
