@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{7F8BE6DC-9465-8479-7983-B00A428FD857}</ProjectGuid>
+    <ProjectGuid>{10748A34-37ED-CF97-FD09-90578D5BF9FD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\Trigger\NormalTrigger\AcAddTransform.cs" />
     <Compile Include="Assets\Scripts\Unit\Enemy\SpiderWeb.cs" />
     <Compile Include="Assets\Scripts\Unit\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\BossObject.cs" />
     <Compile Include="Assets\Scripts\Unit\Player\PlayerPickUpController.cs" />
     <Compile Include="Assets\Scripts\Unit\SO\SOUnitData.cs" />
     <Compile Include="Assets\Scripts\Manager\WeaponManager.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Assets\Scripts\Manager\ScreenManager.cs" />
     <Compile Include="Assets\Scripts\Trigger\NormalTrigger\AcDebugErrorText.cs" />
     <Compile Include="Assets\Scripts\Unit\Player\PlayerMoveController.cs" />
+    <Compile Include="Assets\Scripts\Trigger\GoldBalance\AcDebugUnitDie.cs" />
     <Compile Include="Assets\Scripts\Sound\SOSoundData.cs" />
     <Compile Include="Assets\Scripts\WeaponSpawner.cs" />
     <Compile Include="Assets\Scripts\BackGround.cs" />
@@ -153,8 +155,6 @@
     <Compile Include="Assets\Scripts\Unit\UnitControllerBase.cs" />
     <Compile Include="Assets\Scripts\Trigger\GoldBalance\AcDebugUnitMove.cs" />
     <Compile Include="Assets\Scripts\Manager\EffectManager.cs" />
-    <Compile Include="Assets\Scripts\BossObject.cs" />
-    <Compile Include="Assets\Scripts\Trigger\GoldBalance\AcDebugUnitDie.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -855,7 +855,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{803D98D6-5345-8812-543A-E8F332912D6F}</Project>
+      <Project>{7D4CF28A-1802-A01C-D7CD-C5A1D448B64B}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>

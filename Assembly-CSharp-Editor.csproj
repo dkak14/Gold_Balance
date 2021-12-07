@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{6828CC47-1980-C37B-0840-792724D8184C}</ProjectGuid>
+    <ProjectGuid>{5D572767-BF8B-E5B2-5BE8-31029C8B9CE3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -91,13 +91,13 @@
     <Compile Include="Assets\Scripts\Trigger\Editor\TriggerControllerEditor.cs" />
     <Compile Include="Assets\Scripts\Trigger\GoldBalance\Editor\AcDialogEditor.cs" />
     <Compile Include="Assets\Scripts\Trigger\NormalTrigger\Editor\AcAddforceEditor.cs" />
+    <Compile Include="Assets\Scripts\Trigger\GoldBalance\Editor\AcDebugUnitDieEditor.cs" />
     <Compile Include="Assets\Scripts\Trigger\GoldBalance\Editor\AcSpawnEffectEditor.cs" />
     <Compile Include="Assets\Scripts\Trigger\GoldBalance\Editor\AcSetActiveScreenEffectEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\EnumFlagsAttributeDrawer.cs" />
     <Compile Include="Assets\Scripts\Trigger\Editor\TriggerUtility.cs" />
     <Compile Include="Assets\Scripts\Trigger\Cinemachine\Editor\AcCineSetSoftZoneEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\EditorWaitForSeconds.cs" />
-    <Compile Include="Assets\Scripts\Trigger\GoldBalance\Editor\AcDebugUnitDieEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -811,11 +811,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{803D98D6-5345-8812-543A-E8F332912D6F}</Project>
+      <Project>{7D4CF28A-1802-A01C-D7CD-C5A1D448B64B}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{7F8BE6DC-9465-8479-7983-B00A428FD857}</Project>
+      <Project>{10748A34-37ED-CF97-FD09-90578D5BF9FD}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
   </ItemGroup>
