@@ -6,6 +6,7 @@ using System;
 using System.Text;
 using TMPro;
 public class DialogBox : MonoBehaviour {
+    [SerializeField] SOPortrait soPortrait;
     [SerializeField] Image talkBackground;
     [SerializeField] Image portrait;
     public Sprite portraitSprite { set { portrait.sprite = value; } }
@@ -21,6 +22,8 @@ public class DialogBox : MonoBehaviour {
 
     public event Action typingEnd = delegate { };
 
+    Dictionary<int, Sprite> portraitDic = new Dictionary<int, Sprite>();
+
     public void StartDialog(DialogData dialogData, Sprite sprite) {
         this.dialogData = dialogData;
         portrait.sprite = sprite;
@@ -33,6 +36,11 @@ public class DialogBox : MonoBehaviour {
         isTyping = false;
         EventManager.Instance.TriggerEventMessage(dialogData.typingEndEvent);
         typingEnd();
+    }
+    private void Awake() {
+        for(int i = 0; i < soPortrait.portraitDatas.Count; i++) {
+            portraitDic.Add(soPortrait.portraitDatas[i].id, soPortrait.portraitDatas[i].portrait);
+        }
     }
     IEnumerator C_TextUpdate(DialogData dialogData, float speed) {
         this.dialogData = dialogData;
@@ -48,6 +56,14 @@ public class DialogBox : MonoBehaviour {
         waitForSecond = new WaitForSeconds(speed);
 
         EventManager.Instance.TriggerEventMessage(dialogData.typingStartEvent);
+
+        if (portraitDic.ContainsKey(dialogData.imageID)) {
+            portrait.sprite = portraitDic[dialogData.imageID];
+            portrait.gameObject.SetActive(true);
+        }
+        else {
+            portrait.gameObject.SetActive(false);
+        }
         while (true) {
             index++;
             if (index >= dialogData.dialog.Length)

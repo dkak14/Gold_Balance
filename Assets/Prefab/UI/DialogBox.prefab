@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.63584906, b: 0.63584906, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3df00cc7ef6e28e4587f2184d078cd54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soPortrait: {fileID: 11400000, guid: 8d4abe2b84ad00b40aa4d6cb7fea07a7, type: 2}
   talkBackground: {fileID: 4688149362105771949}
   portrait: {fileID: 4688149363111124429}
   textTMP: {fileID: 4688149363782968279}

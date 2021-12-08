@@ -8,12 +8,12 @@ public class NormalFade : ScreenEffect {
     public override void FadeIn(float duration, float screenValue) {
         Color color = image.color;
         image.color = new Color(color.r, color.g, color.b, 1);
-        image.DOColor(new Color(color.r, color.g, color.b, 0), duration);
+        image.DOColor(new Color(color.r, color.g, color.b, 0), duration).SetUpdate(true);
     }
 
     public override void FadeOut(float duration, float screenValue) {
         Color color = image.color;
         image.color = new Color(color.r, color.g, color.b, 0);
-        image.DOColor(new Color(color.r, color.g, color.b, 1), duration);
+        image.DOColor(new Color(color.r, color.g, color.b, 1), duration).SetUpdate(true);
     }
 }

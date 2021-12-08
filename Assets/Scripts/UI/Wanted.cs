@@ -8,7 +8,6 @@ public class Wanted : MonoBehaviour
 {
     [SerializeField] bool anykeyDisable;
     [SerializeField] string diableEventID;
-    public int textID;
     bool frame;
     private void Update() {
         if (anykeyDisable && Keyboard.current.anyKey.wasPressedThisFrame && frame) {

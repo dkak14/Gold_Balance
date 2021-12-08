@@ -9,19 +9,13 @@ public class PlayerPickUpController : MonoBehaviour, IInitialization
     PlayerInputController playerInputController;
     PlayerAnimController animController;
     PlayerController playerController;
-    Animator animator;
-    [SerializeField] float pickUpRange;
     [SerializeField] PlayerWeapon playerWeapon;
 
-    [SerializeField] float handDst;
     [SerializeField] Vector2 handOffset;
     Vector2 mouseDir;
     protected SpriteRenderer spriteRenderer;
     Camera mainCamera;
 
-    int puoLayerMask;
-
-    RaycastHit2D closePUO;
     void Awake()
     {
         Initialization();
@@ -60,20 +54,6 @@ public class PlayerPickUpController : MonoBehaviour, IInitialization
                 playerWeapon.selectWeapon.spriteRenderer.sortingOrder = clipData.orderInLayer;
                 playerWeapon.selectWeapon.AimUpdate(offSet, dir, 0, clipData);
             }
-        }
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, pickUpRange, Vector2.up, pickUpRange, puoLayerMask);
-        if(hits.Length > 0) {
-            float minDst = pickUpRange * 10;
-            for(int i = 0; i< hits.Length; i++) {
-                float dst = Vector2.Distance(transform.position, hits[i].transform.position);
-                if(dst < minDst) {
-                    minDst = dst;
-                    closePUO = hits[i];
-                }
-            }
-        }
-        else {
-            closePUO = new RaycastHit2D();
         }
     }
     void OnDisable() {
@@ -120,13 +100,8 @@ public class PlayerPickUpController : MonoBehaviour, IInitialization
             }
         }
     }
-    void GetItem(InputAction.CallbackContext context) {
-        if (closePUO) {
-            PickUpObject puo;
-            if (closePUO.transform.gameObject.TryGetComponent(out puo)) {
-                playerWeapon.SetWeapon(playerWeapon.SelectIndex, puo);
-            }
-        }
+    public void GetItem(PickUpObject puo) {
+        playerWeapon.SetWeapon(playerWeapon.SelectIndex, puo);
     }
     void ThrowItem(InputAction.CallbackContext context) {
         playerWeapon.ThrowWeapon(playerWeapon.SelectIndex);
@@ -149,7 +124,6 @@ public class PlayerPickUpController : MonoBehaviour, IInitialization
         playerWeapon.SetActiveWeapon(false);
     }
     public void Initialization() {
-        TryGetComponent(out animator);
         TryGetComponent(out spriteRenderer);
         TryGetComponent(out animController);
         TryGetComponent(out playerInputController);
@@ -159,11 +133,9 @@ public class PlayerPickUpController : MonoBehaviour, IInitialization
         playerInputController.GetInputAction("LeftClick").inputAction.started += PickUpObjectAction;
         playerInputController.GetInputAction("1").inputAction.started += (context)=> { if(!playerController.IsActiveState(UnitAnimState.Die)) playerWeapon.SelectWeapon(0); };
         playerInputController.GetInputAction("2").inputAction.started += (context) => { if (!playerController.IsActiveState(UnitAnimState.Die)) playerWeapon.SelectWeapon(1); };
-        playerInputController.GetInputAction("F").inputAction.started += GetItem;
         playerInputController.GetInputAction("Q").inputAction.started += ThrowItem;
         playerWeapon = new PlayerWeapon(this,animController, 2);
         playerWeapon.changeSelectWeapon += ChangeSelectWeapon;
-        puoLayerMask = 1 << LayerMask.NameToLayer("PickUpObject");
         playerController.DieEvent += PlayerDie;
     }
 }

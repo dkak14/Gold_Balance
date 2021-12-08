@@ -9,6 +9,7 @@ public class PlayerController : UnitControllerBase
     protected override void die() {
         animController.AnimType = WeaponType.NULL;
         animator.SetBool("isDie", true);
+        EventManager.Instance.PlayerDie(this);
     }
     public override void Initialization() {
         base.Initialization();

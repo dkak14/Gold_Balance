@@ -5,14 +5,21 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : SingletonBehaviour<SceneLoader>
 {
     bool changeScene;
-    public void SceneChange(string sceneID, ScreenEffectData effectData) {
+    public bool SceneChange(string sceneID, ScreenEffectData effectData) {
         if (Application.CanStreamedLevelBeLoaded(sceneID)) {
-            if(!changeScene)
-            StartCoroutine(C_SceneChange(sceneID, effectData));
+            if (!changeScene) {
+                StartCoroutine(C_SceneChange(sceneID, effectData));
+                return true;
+            }
         }
         else {
             Debug.LogError($"{sceneID}라는 씬은 존재하지 않습니다");
         }
+        return false;
+    }
+    public void SceneRestart(ScreenEffectData effectData) {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneChange(scene.name, effectData);
     }
     IEnumerator C_SceneChange(string sceneID, ScreenEffectData effectData) {
         if (!changeScene) {
@@ -20,7 +27,7 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
             EventManager.Instance.SceneChangeStart(sceneID);
             ScreenManager.Instance.SetActiveScreenEffect(effectData.id, effectData.duration, effectData.screenValue, false);
             Scene activeScene = SceneManager.GetActiveScene();
-            yield return new WaitForSeconds(effectData.duration);
+            yield return new WaitForSecondsRealtime(effectData.duration);
             AsyncOperation deActiveAO = SceneManager.UnloadSceneAsync(activeScene);
             while (!deActiveAO.isDone) {
                 yield return null;

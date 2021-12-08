@@ -67,6 +67,26 @@ public class Weapon : PickUpObject
             }
         }
     }
+    public override void DisplayUI(EquipWeaponUI ui) {
+        base.DisplayUI(ui);
+        switch (weaponData.type) {
+            case WeaponType.NULL:
+                ui.weaponImage.transform.localScale = Vector3.one;
+                break;
+            case WeaponType.SHORT_GUN:
+                ui.weaponImage.transform.localScale = Vector3.one * 3;
+                break;
+            case WeaponType.LONG_GUN:
+                ui.weaponImage.transform.localScale = Vector3.one * 1.5f;
+                break;
+            case WeaponType.MELEE:
+                ui.weaponImage.transform.localScale = Vector3.one;
+                break;
+            case WeaponType.BAT:
+                ui.weaponImage.transform.localScale = Vector3.one* 1.2f;
+                break;
+        }
+    }
 }
 [System.Serializable]
 public struct WeaponEffect {
@@ -75,10 +95,10 @@ public struct WeaponEffect {
     public int index;
     public WeaponEffectPos falseFlipX;
     public WeaponEffectPos trueFlipX;
-}
-[System.Serializable]
+    [System.Serializable]
 public struct WeaponEffectPos {
     public Vector2 offset;
     public bool flip;
     public float angle;
+}
 }

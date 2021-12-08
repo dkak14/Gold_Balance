@@ -101,6 +101,7 @@ public class Gun : Weapon
         layerMask = (1 << LayerMask.NameToLayer("Enemy")) + (1 << LayerMask.NameToLayer("Platform"));
     }
     public override void DisplayUI(EquipWeaponUI ui) {
+        base.DisplayUI(ui);
         displayUI = ui;
         ui.underBox.gameObject.SetActive(true);
         StringBuilder builder = new StringBuilder();

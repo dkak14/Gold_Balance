@@ -10,6 +10,7 @@ public class EventManager : Singleton<EventManager>
     public Action<int, PickUpObject> SelectWeapon = delegate { };
     public Action<UnitControllerBase> SpawnUnit = delegate { };
     public Action<UnitControllerBase, int> DieUnit = delegate { };
+    public Action<PlayerController> PlayerDie = delegate { };
     public Action<string> TriggerEventMessage = delegate { };
 
     public Action<string> SceneChangeStart = delegate { };

@@ -7,7 +7,7 @@ using TMPro;
 public class EquipWeaponUI : MonoBehaviour
 {
     [SerializeField] Image backGround;
-    [SerializeField] Image weaponImage;
+    [SerializeField] public Image weaponImage;
     [SerializeField] public Image underBox;
     [SerializeField] public TextMeshProUGUI cornerText;
     PickUpObject pickupObject;
