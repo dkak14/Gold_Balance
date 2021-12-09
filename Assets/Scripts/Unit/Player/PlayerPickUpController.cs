@@ -21,6 +21,7 @@ public class PlayerPickUpController : MonoBehaviour, IInitialization
         Initialization();
         EventManager.Instance.SceneChangeStart += SceneChangeStart;
         EventManager.Instance.SceneChangeEnd += SceneChangeEnd;
+        playerController.DieEvent += PlayerDie;
     }
     void Start() {
         animController.AnimType = WeaponType.NULL;
@@ -59,7 +60,10 @@ public class PlayerPickUpController : MonoBehaviour, IInitialization
     void OnDisable() {
         playerInputController.GetInputAction("LeftClick").inputAction.started -= PickUpObjectAction;
     }
-    void SceneChangeStart(string sceneName) {
+    void SceneChangeStart(string beforeScene, string sceneName) {
+        if (sceneName == beforeScene)
+            return;
+
         SaveData weaponData = new SaveData();
         for(int i = 0; i < playerWeapon.WeaponCount; i++) {
             PickUpObject puo = playerWeapon.GetWeapon(i);
@@ -76,24 +80,27 @@ public class PlayerPickUpController : MonoBehaviour, IInitialization
         weaponData.AddData("SelectIndex",new SaveData(playerWeapon.SelectIndex));
         SaveSystem.SaveSerailizeData("Stage", sceneName +"_Weapon", weaponData);
     }
-    void SceneChangeEnd() {
+    void SceneChangeEnd(string before, string now) {
         string stageSceneName = SceneManager.GetActiveScene().name;
 
         SaveData loadData = SaveSystem.LoadDeSerailizedData("Stage", stageSceneName+"_Weapon");
-        for (int i = 0; i < playerWeapon.WeaponCount; i++) {
-            SaveData data = loadData.GetData(i.ToString());
-            Debug.Log("로드 무기 " + data.GetInt());
-            Weapon weaponData = WeaponManager.Instance.GetWeapon(data.GetInt());
-            if (weaponData != null) {
-                Weapon weaponObject = Instantiate(weaponData);
-                playerWeapon.SetWeapon(i, weaponObject);
+        if (loadData != null) {
+            for (int i = 0; i < playerWeapon.WeaponCount; i++) {
+                SaveData data = loadData.GetData(i.ToString());
+                Debug.Log("로드 무기 " + data.GetInt());
+                Weapon weaponData = WeaponManager.Instance.GetWeapon(data.GetInt());
+                if (weaponData != null) {
+                    Weapon weaponObject = Instantiate(weaponData);
+                    playerWeapon.SetWeapon(i, weaponObject);
+                }
             }
+            int selectIndex = loadData.GetData("SelectIndex").GetInt();
+            playerWeapon.SelectWeapon(selectIndex);
+            Debug.Log("셀렉트 " + selectIndex);
         }
-        int selectIndex = loadData.GetData("SelectIndex").GetInt();
-        playerWeapon.SelectWeapon(selectIndex);
     }
     void PickUpObjectAction(InputAction.CallbackContext context) {
-        if (playerWeapon.selectWeapon != null && !playerController.IsActiveState(UnitAnimState.Cinematic)) {
+        if (playerWeapon.selectWeapon != null && !playerController.IsActiveState(UnitAnimState.Cinematic) && Time.timeScale != 0) {
             if (playerWeapon.selectWeapon.Action(mouseDir)) {
                 //if (!animator.GetBool("isMove") || animator.GetBool("isJump"))
                 //    animator.SetTrigger("Attack");
@@ -121,6 +128,7 @@ public class PlayerPickUpController : MonoBehaviour, IInitialization
         }
     }
     void PlayerDie() {
+        Debug.Log("플레이어 죽음");
         playerWeapon.SetActiveWeapon(false);
     }
     public void Initialization() {
@@ -136,7 +144,6 @@ public class PlayerPickUpController : MonoBehaviour, IInitialization
         playerInputController.GetInputAction("Q").inputAction.started += ThrowItem;
         playerWeapon = new PlayerWeapon(this,animController, 2);
         playerWeapon.changeSelectWeapon += ChangeSelectWeapon;
-        playerController.DieEvent += PlayerDie;
     }
 }
 [System.Serializable]
@@ -167,18 +174,17 @@ public class PlayerWeapon {
         }
         else {
             for (int i = 0; i < objectList.Count; i++) {
-                if (selectIndex != i && objectList[i] != null) {
+                if (objectList[i] != null) {
                     objectList[i].NotSelectPickUp(pickUpController);
                 }
             }
         }
     }
     public void SelectWeapon(int index) {
-        if (selectIndex == index)
-            return;
-
         selectIndex = index;
         changeSelectWeapon(objectList[index]);
+        if (selectIndex != index)
+            SoundManager.Instance.PlayOneShot(SoundType.SFX, "WeaponChange", 1);
         EventManager.Instance.SelectWeapon(index, objectList[index]);
         SelectWeaponUpdate();
     }
@@ -201,6 +207,8 @@ public class PlayerWeapon {
         changeSelectWeapon(objectList[index]);
         EventManager.Instance.GetWeapon(index, getObject);
         SelectWeaponUpdate();
+        if(getObject != null)
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, "GetWeapon", 1);
     }
     public PickUpObject GetWeapon(int index) {
         return objectList[index];

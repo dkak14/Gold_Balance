@@ -17,8 +17,13 @@ public class SoundPage : MonoBehaviour, IInitialization
         backButton.onClick.AddListener(BackClick);
         exitButton.onClick.AddListener(ExitClick);
         EventManager.Instance.SceneChangeEnd += SceneChangeEnd;
+        EventManager.Instance.ClickSettingButton += ClickSettingButton;
     }
-    void SceneChangeEnd() {
+    void ClickSettingButton() {
+        pageObject.SetActive(true);
+        exitButton.gameObject.SetActive(false);
+    }
+    void SceneChangeEnd(string before, string now) {
         sceneChange = false;
         Close();
     }
@@ -51,6 +56,7 @@ public class SoundPage : MonoBehaviour, IInitialization
         if (!sceneChange) {
             if (pageObject.activeSelf == false) {
                 pageObject.gameObject.SetActive(true);
+                exitButton.gameObject.SetActive(true);
                 beforeTimeScale = Time.timeScale;
                 Time.timeScale = 0;
             }

@@ -77,10 +77,13 @@ public class Gun : Weapon
         if (lastBullet <= 0) {
             lastReload = weaponData.reloading;
             Debug.Log("재장전 중 " +lastReload);
+            SoundManager.Instance.PlayOneShot(SoundType.SFX, "Reload", 1);
             reloading = true;
         }
         if(!unitAnimator.GetBool("isMove"))
         unitAnimator.SetTrigger("Attack");
+
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, soundID, volume);
     }
 
     public override void PickUp(PlayerPickUpController pickUpController, Vector2 centerOffset, Vector2 dir, float dst, PlayerAnimClipSpriteData spriteData) {

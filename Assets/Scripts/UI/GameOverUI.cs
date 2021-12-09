@@ -45,10 +45,11 @@ public class GameOverUI : MonoBehaviour
     }
     IEnumerator C_PlayerDie() {
         yield return new WaitForSeconds(activeDuration);
+        Time.timeScale = 0;
         backGround.gameObject.SetActive(true);
         Color backColor = backGround.color;
         backGround.color = new Color(backColor.r, backColor.g, backColor.b, 0);
-        backGround.DOColor(backColor, backGroundDuration);
+        backGround.DOColor(backColor, backGroundDuration).SetUpdate(true);
         yield return new WaitForSeconds(OverAndButtonActiveDuration);
         gameOver.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
@@ -62,8 +63,8 @@ public class GameOverUI : MonoBehaviour
         Vector3 buttonPos = image.transform.position;
         image.color = new Color(1, 1, 1, 0);
         image.transform.position += startOffset;
-        image.transform.DOMove(buttonPos, duration);
-        image.DOColor(Color.white, duration);
+        image.transform.DOMove(buttonPos, duration).SetUpdate(true);
+        image.DOColor(Color.white, duration).SetUpdate(true);
     }
     void RestartClick() {
         SceneLoader.Instance.SceneRestart(new ScreenEffectData("Normal", 2, 1, false));

@@ -23,6 +23,7 @@ namespace Triggers {
                 lastTime += Time.deltaTime;
                 yield return null;
             }
+            transformMono.transform.position = endPos.position;
         }
         public override TriggerAction GetCopyTrigger() {
             AcDoMoveTransform doMoveTransform = CreateInstance<AcDoMoveTransform>();

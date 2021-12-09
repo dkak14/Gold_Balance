@@ -25,7 +25,6 @@ namespace GameSave {
                 Directory.CreateDirectory(folderPath);
 
             using (FileStream file = File.Create(path)) {
-                Debug.Log("Â¼Àå");
                 new BinaryFormatter().Serialize(file, saveData.GetSerilizedData());
             }
         }
@@ -36,7 +35,6 @@ namespace GameSave {
                 using (FileStream file = File.Open(path, FileMode.Open)) {
                     object saveDataObject = new BinaryFormatter().Deserialize(file);
                     saveData.LoadFromSerilizedData(saveDataObject);
-                    Debug.Log("·Îµå");
                     return saveData;
                 }
             }

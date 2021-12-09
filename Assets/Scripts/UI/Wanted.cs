@@ -8,7 +8,11 @@ public class Wanted : MonoBehaviour
 {
     [SerializeField] bool anykeyDisable;
     [SerializeField] string diableEventID;
+    [SerializeField] string enableSound = "ReadWanted";
+    [SerializeField] float volume = 1;
     bool frame;
+    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] int textID;
     private void Update() {
         if (anykeyDisable && Keyboard.current.anyKey.wasPressedThisFrame && frame) {
             gameObject.SetActive(false);
@@ -18,13 +22,12 @@ public class Wanted : MonoBehaviour
     }
     private void OnEnable() {
         EventManager.Instance.SetActiveCutScene(true);
-        //UnitControllerBase unit = UnitManager.Instance.GetUnit("Player");
-        //UnitMoveControllerBase playerMove;
-        //if(unit && unit.TryGetComponent(out playerMove)){
-        //    playerMove.isMove = false;
-        //    playerMove.isJump = false;
-        //}
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, enableSound, volume);
         frame = false;
+
+        if(text != null) {
+            text.text = TalkManager.Instance.GetDialogData(textID).dialog;
+        }
     }
 
     private void OnDisable() {

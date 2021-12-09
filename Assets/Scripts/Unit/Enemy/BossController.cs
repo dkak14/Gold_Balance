@@ -12,6 +12,7 @@ public class BossController : EnemyController
     [Header("<Phase 1>")]
     [SerializeField] Vector2 bulletOffSet;
     [SerializeField] float attackCul1;
+    [SerializeField] float phase1speed;
     [Header("Fast Attack")]
     [SerializeField] int fastDamage;
     [SerializeField] float bulletSpread1;
@@ -24,8 +25,14 @@ public class BossController : EnemyController
     [SerializeField] float buletRange2;
     [SerializeField] int attackCount2;
     [SerializeField] float attackSpeed2;
+    [Header("Melee Attack")]
+    [SerializeField] EffectObject effect;
+    [SerializeField] float meleeRange;
+    [SerializeField] int meleeDamage;
+    [SerializeField] float pushPower;
     [Header("<Phase 2>")]
     [SerializeField] RuntimeAnimatorController phase2Controller;
+    [SerializeField] float phase2speed;
     [SerializeField] int phase2Damage;
     [SerializeField] float phase2AttackRange;
     [SerializeField] float attackCul2;
@@ -62,6 +69,7 @@ public class BossController : EnemyController
         bulletLayerMask = (1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("Platform"));
         hpValueChange += PhaseTwoCondition;
         StartCoroutine(C_PhaseTwoSensing());
+        Speed = phase1speed;
     }
     protected override void Start() {
         base.Start();
@@ -78,15 +86,33 @@ public class BossController : EnemyController
 
         if (!IsActiveState(UnitAnimState.Cinematic)) {
             if (phaseIndex == 1) {
-                if(attackcul1 <= 0 && Vector2.Distance(transform.position, playerController.transform.position) <= attackRange) {
-                    int attackIndex = Random.Range(0, 2);
-                    if (attackIndex == 0) {
-                        SlowAttack();
+                float dst = Vector2.Distance(transform.position, playerController.transform.position);
+                if (attackcul1 <= 0 && dst <= attackRange) {
+                    if (dst <= meleeRange) {
+                        int dir = spriteRenderer.flipX ? -1 : 1;
+                        EffectObject eo= Instantiate(effect, transform.position + Vector3.right * dir, Quaternion.identity);
+                        eo.GetComponent<SpriteRenderer>().flipX = FlipX;
+                        Rigidbody2D playerRigid;
+                        if(playerController.TryGetComponent(out playerRigid)) {
+                            playerRigid.velocity = Vector2.zero;
+                            playerRigid.AddForce(Vector2.right * dir * pushPower, ForceMode2D.Impulse);
+                            playerRigid.AddForce(Vector2.up * 3, ForceMode2D.Impulse);
+                            playerController.Damaged(meleeDamage, this, WeaponType.NULL);
+                            StartCoroutine(PlayerDontMove());
+                        }
+                        SoundManager.Instance.PlayOneShot(SoundType.SFX, "ZombieAttack", 1);
+                        attackcul1 = attackCul1;
                     }
                     else {
-                        FastAttack();
+                        int attackIndex = Random.Range(0, 2);
+                        if (attackIndex == 0) {
+                            SlowAttack();
+                        }
+                        else {
+                            FastAttack();
+                        }
+                        attackcul1 = 100;
                     }
-                    attackcul1 = 100;
                 }
                 else {
                     attackcul1 -= Time.deltaTime;
@@ -105,6 +131,14 @@ public class BossController : EnemyController
             }
         }
     }
+    IEnumerator PlayerDontMove() {
+        PlayerMoveController player;
+        if(playerController.TryGetComponent(out player)) {
+            player.isMove = false;
+            yield return new WaitForSeconds(1);
+            player.isMove = true;
+        }
+    }
     void PhaseTwoAttack() {
         StartCoroutine(C_PhaseTwoAttack());
     }
@@ -113,6 +147,7 @@ public class BossController : EnemyController
 
         yield return new WaitForSeconds(attack2Delay);
         animator.SetTrigger("Attack");
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, "BossPhase2Attack", 1);
         Vector2 point = spriteRenderer.flipX ? new Vector2(-attackOffset.x, attackOffset.y) : attackOffset;
         Collider2D player = Physics2D.OverlapBox((Vector2)transform.position + point, attackSize, 0, 1 << LayerMask.NameToLayer("Player"));
         UnitControllerBase unit;
@@ -144,6 +179,7 @@ public class BossController : EnemyController
                 EventManager.Instance.TriggerEventMessage("Phase2Start");
                 animator.speed = 1;
                 phaseIndex = 2;
+                Speed = phase2speed;
                 if (phase1AttackRoutine != null)
                     StopCoroutine(phase1AttackRoutine);
             }
@@ -162,6 +198,7 @@ public class BossController : EnemyController
         animator.speed = 0;
 
         yield return new WaitForSeconds(1);
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, "BossFastAttack", 1);
         animator.speed = 1;
         WaitForSeconds wait = new WaitForSeconds(delay);
         for(int i = 0; i < count; i++) {
@@ -175,6 +212,7 @@ public class BossController : EnemyController
         animator.Play("Boss_Phase1_Attack", 0, 0);
         animator.speed = 0;
         yield return new WaitForSeconds(delay);
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, "BossSlowAttack", 1);
         animator.speed = 1;
         ShotBullet(damage, spread, range, bulletColor2);
         attackcul1 = attackCul1;
@@ -199,7 +237,7 @@ public class BossController : EnemyController
         }
         else {
             Vector2 pos1 = (Vector2)transform.position + offSet;
-            Vector2 pos2 = (Vector2)transform.position + offSet + bulletDir * 10;
+            Vector2 pos2 = (Vector2)transform.position + offSet + bulletDir * range;
             BulletLineCreate(1, pos1, pos2, color);
         }
     }
@@ -245,7 +283,8 @@ public class BossController : EnemyController
         SetActiveState(UnitAnimState.Cinematic, true);
         moveController.isMove = false;
         deadBody.flipX = spriteRenderer.flipX;
-        deadBody.transform.position = transform.position - Vector3.right * 0.085f;
+        //deadBody.transform.position = transform.position;
+        //Debug.Log(deadBody.transform.position);
         EventManager.Instance.TriggerEventMessage("BossDie");
     }
     protected override void OnDrawGizmos() {
@@ -253,5 +292,7 @@ public class BossController : EnemyController
         MyGizmos.DrawWireCicle((Vector2)transform.position + bulletOffSet, 0.02f, 30);
         Gizmos.DrawWireCube((Vector2)transform.position + attackOffset, attackSize);
         MyGizmos.DrawWireCicle(transform.position, phase2AttackRange, 30);
+        Gizmos.color = Color.magenta;
+        MyGizmos.DrawWireCicle(transform.position, meleeRange, 30);
     }
 }

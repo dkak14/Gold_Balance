@@ -7,7 +7,6 @@ public class PlayerInputController : MonoBehaviour, IInitialization
     PlayerInput playerInput;
     Dictionary<string, MyInputAction> myInputActionDIc;
 
-    public event System.Action testEvent = delegate { };
     protected virtual void Awake() {
         Initialization();
     }
@@ -36,6 +35,7 @@ public class PlayerInputController : MonoBehaviour, IInitialization
         myInputActionDIc.Add("RightClick", new MyInputAction(playerInput.Mouse.Right));
         myInputActionDIc.Add("MiddleClick", new MyInputAction(playerInput.Mouse.Middle));
         myInputActionDIc.Add("Space", new MyInputAction(playerInput.KeyBoard.Space));
+        myInputActionDIc.Add("P", new MyInputAction(playerInput.KeyBoard.P));
         myInputActionDIc.Add("K", new MyInputAction(playerInput.KeyBoard.K));
         myInputActionDIc.Add("L", new MyInputAction(playerInput.KeyBoard.L));
         myInputActionDIc.Add("R", new MyInputAction(playerInput.KeyBoard.R));
@@ -46,7 +46,7 @@ public class PlayerInputController : MonoBehaviour, IInitialization
         myInputActionDIc.Add("1", new MyInputAction(playerInput.KeyBoard._1));
         myInputActionDIc.Add("2", new MyInputAction(playerInput.KeyBoard._2));
 
-        GetInputAction("K").inputAction.started += (con) => { testEvent(); };
+        GetInputAction("K").inputAction.started += (con) => { SceneLoader.Instance.SceneChange("BossStage", new ScreenEffectData("Normal", 1, 1, false)); };
     }
 }
 public class MyInputAction {

@@ -14,6 +14,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundDataList:
   - type: 0
-    clipDataList: []
+    clipDataList:
+    - id: Main
+      clip: {fileID: 8300000, guid: 7929b9669fc6356419f863531d9dd5da, type: 3}
+    - id: Stage1
+      clip: {fileID: 8300000, guid: 24eaa1297ecb671479c0601a94fb39f4, type: 3}
+    - id: Boss1
+      clip: {fileID: 8300000, guid: e3e13986ad9c0144b923c6c81dc1e327, type: 3}
+    - id: Boss2
+      clip: {fileID: 8300000, guid: 5696653019828f641b1ad0d46fd17cf2, type: 3}
+    - id: Ending
+      clip: {fileID: 8300000, guid: 26103b082d1050041a567f4e416697df, type: 3}
+    - id: Bar
+      clip: {fileID: 8300000, guid: 21f477643b9e113498b7d20086324dc3, type: 3}
   - type: 1
-    clipDataList: []
+    clipDataList:
+    - id: AttackMelee
+      clip: {fileID: 8300000, guid: d190f86216fe84944be67cefdeb565e8, type: 3}
+    - id: Button
+      clip: {fileID: 8300000, guid: bff063de89ac8fb44b3ff20a984b2fdd, type: 3}
+    - id: GetWeapon
+      clip: {fileID: 8300000, guid: 5bfd28065a05375479bfd7c418353893, type: 3}
+    - id: Gun1
+      clip: {fileID: 8300000, guid: 8f9b65b21d120ca42a53a3512b52acf1, type: 3}
+    - id: Gun2
+      clip: {fileID: 8300000, guid: 625816bc7c7a1774f85b2239cf23183a, type: 3}
+    - id: PlayerFootStep
+      clip: {fileID: 8300000, guid: 9d1e504716a579b4fa0d723c856bfac0, type: 3}
+    - id: BossFootStep
+      clip: {fileID: 8300000, guid: ec517c6994681de44be13b82ecd1c548, type: 3}
+    - id: Reload
+      clip: {fileID: 8300000, guid: acdaa4ed7e0a8154faf08c555cd353c5, type: 3}
+    - id: SpiderAttack
+      clip: {fileID: 8300000, guid: 0adbe3447bd80784b9967cb46030baf5, type: 3}
+    - id: SpiderDamaged
+      clip: {fileID: 8300000, guid: a11a383704eadc34e8dbd3be202aa764, type: 3}
+    - id: SpiderDie
+      clip: {fileID: 8300000, guid: b0a1e71154a38db4f9db063fe0482593, type: 3}
+    - id: WeaponChange
+      clip: {fileID: 8300000, guid: b6bc2e33ebb9cc543948ae9428a81da5, type: 3}
+    - id: BossAttack
+      clip: {fileID: 8300000, guid: e105eae1ec316384b8beb25cb3d71c4d, type: 3}
+    - id: BossMark
+      clip: {fileID: 8300000, guid: a0756671b66a71d4da32e09a34469ce6, type: 3}
+    - id: BossDie
+      clip: {fileID: 8300000, guid: d928614b584482a48b2dc8576416763e, type: 3}
+    - id: BossFastAttack
+      clip: {fileID: 8300000, guid: bda478a5412f16d4c919402236ebd105, type: 3}
+    - id: BossSlowAttack
+      clip: {fileID: 8300000, guid: e105eae1ec316384b8beb25cb3d71c4d, type: 3}
+    - id: BossPhase2Attack
+      clip: {fileID: 8300000, guid: 71f81c07992c5ce468899829e0c56da9, type: 3}
+    - id: BossDamaged
+      clip: {fileID: 8300000, guid: d2fa69427cf0b3642848b2027f0425fd, type: 3}
+    - id: ReadWanted
+      clip: {fileID: 8300000, guid: 1a748c7be5cdd3f43991dc5aaa6f4c5b, type: 3}
+    - id: CallEnd
+      clip: {fileID: 8300000, guid: 19f73c8dfeb2b9b44bcc78aa23cbad4f, type: 3}
+    - id: Call
+      clip: {fileID: 8300000, guid: a68f33af4444484479eecfbc9398774e, type: 3}
+    - id: Jump
+      clip: {fileID: 8300000, guid: 80130232298adc94290b0f32f62de5e3, type: 3}
+    - id: ZombieAttack
+      clip: {fileID: 8300000, guid: c05f251a04a4177418c7b2f15a18a838, type: 3}
+    - id: ZombieDie
+      clip: {fileID: 8300000, guid: 9224edcec1b68be439962595da85e9d0, type: 3}
+    - id: ZombieDamaged
+      clip: {fileID: 8300000, guid: 47bd63e118c58e048bab4022396b7d8a, type: 3}

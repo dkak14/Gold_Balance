@@ -10,5 +10,6 @@ public class SOStageData : ScriptableObject
 [System.Serializable]
 public struct StageData {
     public string sceneName;
+    public string bgm;
     public bool isJoin;
 }

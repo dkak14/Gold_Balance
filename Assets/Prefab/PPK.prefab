@@ -255,6 +255,8 @@ MonoBehaviour:
     attackSpeed: 0.5
     bullet: 5
     type: 1
+  soundID: Gun1
+  volume: 0.8
   bulletOffSet: {x: 0.16, y: 0.06}
   bulletShaking: 4
   bulletColor: {r: 1, g: 0.9697046, b: 0, a: 1}

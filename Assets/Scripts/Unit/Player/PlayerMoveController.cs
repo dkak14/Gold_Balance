@@ -45,7 +45,9 @@ public class PlayerMoveController : UnitMoveControllerBase {
         }
     }
     void JumpInput(InputAction.CallbackContext context) {
-        Jump(jumpPower);
+        if (Jump(jumpPower)) {
+            //SoundManager.Instance.PlayOneShot(SoundType.SFX, "Jump", 1);
+        }
         
     }
     void JumpAnim(bool onPlatform) {

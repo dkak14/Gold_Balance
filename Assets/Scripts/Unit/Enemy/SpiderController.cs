@@ -43,6 +43,11 @@ public class SpiderController : EnemyController
         Animator animator = GetComponent<Animator>();
         animator.SetBool("isDie", true);
         StartCoroutine(C_DieEffect());
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, "SpiderDie", 1);
+    }
+    protected override void damaged(int damage, UnitControllerBase attacker, WeaponType type) {
+        base.damaged(damage, attacker, type);
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, "SpiderDamaged", 1);
     }
     IEnumerator C_DieEffect() {
         yield return new WaitForSeconds(1.5f);
@@ -63,6 +68,7 @@ public class SpiderController : EnemyController
         Destroy(gameObject);
     }
     public override void Attack() {
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, "SpiderAttack", 1);
         SpiderWeb webObject= Instantiate(web, (Vector2)transform.position + Offset, Quaternion.identity);
         Vector2 dir = (playerController.transform.position - transform.position).normalized;
         webObject.BulletSetting(this, webSpeed, dir);

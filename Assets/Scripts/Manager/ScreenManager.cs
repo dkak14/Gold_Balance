@@ -38,9 +38,8 @@ public class ScreenManager : SingletonBehaviour<ScreenManager>
         if (data.effectObject != null) {
             ScreenEffect effectObject = data.effectObject;
             effectObject.DOKill();
-            Destroy(effectObject.gameObject);
-            data.effectObject = null;
-            Debug.Log("ªË¡¶");
+            //Destroy(effectObject.gameObject);
+            //data.effectObject = null;
         }
         if (data.effectObject == null) {
             ScreenEffect effectObject = Instantiate(data.effectPrefab, canvas);

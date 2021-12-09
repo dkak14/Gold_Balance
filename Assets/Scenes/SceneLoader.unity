@@ -534,7 +534,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -558249501002877854, guid: 8fad6723f4001574795a603ae2d6a11a, type: 3}
+  m_Sprite: {fileID: 3514464707970264194, guid: 5cac3f12928e6df488dfba60ad01c3a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -883,7 +883,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5673656678967486704, guid: 28567e6b5bc5d304c91e5a5caa1e3da5, type: 3}
+  m_Sprite: {fileID: 197249775863720407, guid: 08b776854db578f438c59bf9f2e3d8f7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1210,7 +1210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soSoundData: {fileID: 11400000, guid: 1e2bda5a0f67a8d428e5d3261f434343, type: 2}
-  startBGM: 
+  soStageData: {fileID: 11400000, guid: ce07ad851c30a9246b85b9faa5e2ae1c, type: 2}
 --- !u!4 &898808263
 Transform:
   m_ObjectHideFlags: 0
@@ -1275,7 +1275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d873c2f8fb1ff7543a7e1c43300a356d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundType: 0
+  soundType: 1
   slider: {fileID: 1282505954}
 --- !u!1 &1248847031
 GameObject:
@@ -2210,6 +2210,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 528088017}
     m_Modifications:
+    - target: {fileID: 4688149362105771944, guid: 4d48a9880a5f006478634703f19b3c44, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688149362105771947, guid: 4d48a9880a5f006478634703f19b3c44, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 205
+      objectReference: {fileID: 0}
     - target: {fileID: 4688149363234454929, guid: 4d48a9880a5f006478634703f19b3c44, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

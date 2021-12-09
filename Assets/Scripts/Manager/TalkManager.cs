@@ -66,7 +66,7 @@ public partial class TalkManager : SingletonBehaviour<TalkManager> {
             data.typingEndEvent = dialog.dialogDatas[dialogIndex].typingEndEvent;
 
             dialogBoxObject.StartDialog(data, null);
-            Debug.Log(dialog.dialogDatas[dialogIndex].dialog + " 대화 시작");
+            Debug.Log(data.dialog + " 대화 시작");
         }
         else {
             if (dialog.closeBoxAfterEnd) {

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : SingletonBehaviour<SceneLoader>
 {
     bool changeScene;
+    string loadScene;
     public bool SceneChange(string sceneID, ScreenEffectData effectData) {
         if (Application.CanStreamedLevelBeLoaded(sceneID)) {
             if (!changeScene) {
@@ -23,26 +24,35 @@ public class SceneLoader : SingletonBehaviour<SceneLoader>
     }
     IEnumerator C_SceneChange(string sceneID, ScreenEffectData effectData) {
         if (!changeScene) {
+            loadScene = sceneID;
             changeScene = true;
-            EventManager.Instance.SceneChangeStart(sceneID);
             ScreenManager.Instance.SetActiveScreenEffect(effectData.id, effectData.duration, effectData.screenValue, false);
             Scene activeScene = SceneManager.GetActiveScene();
+            EventManager.Instance.SceneChangeStart(activeScene.name, sceneID);
             yield return new WaitForSecondsRealtime(effectData.duration);
             AsyncOperation deActiveAO = SceneManager.UnloadSceneAsync(activeScene);
             while (!deActiveAO.isDone) {
                 yield return null;
             }
-
+            
             AsyncOperation ao = SceneManager.LoadSceneAsync(sceneID, LoadSceneMode.Additive);
+            ao.completed += OperationOnCompleted;
             while (!ao.isDone) {
                 yield return null;
             }
+            ScreenManager.Instance.SetActiveScreenEffect(effectData.id, effectData.duration, effectData.screenValue, true);
             Scene nowScene = SceneManager.GetSceneByName(sceneID);
             SceneManager.SetActiveScene(nowScene);
-            ScreenManager.Instance.SetActiveScreenEffect(effectData.id, effectData.duration, effectData.screenValue, true);
-            EventManager.Instance.SceneChangeEnd();
+            EventManager.Instance.SceneChangeEnd(activeScene.name, sceneID);
+            Time.timeScale = 1;
             changeScene = false;
+            ao.completed -= OperationOnCompleted;
         }
+    }
+    void OperationOnCompleted(AsyncOperation obj) {
+        Scene scene = SceneManager.GetSceneByName(loadScene);
+        SceneManager.SetActiveScene(scene);
+
     }
 }
 public struct ScreenEffectData {

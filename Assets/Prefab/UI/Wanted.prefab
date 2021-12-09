@@ -125,10 +125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6d49cb6b0bbe94ca66c55498b277d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputController: {fileID: 0}
   anykeyDisable: 0
   diableEventID: 
-  textID: 10001
+  enableSound: ReadWanted
+  volume: 1
 --- !u!1 &9183054195812398320
 GameObject:
   m_ObjectHideFlags: 0

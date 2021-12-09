@@ -22,6 +22,7 @@ public class SODialogDataEditor : Editor
         }
 
         base.OnInspectorGUI();
+        serializedObject.ApplyModifiedProperties();
     }
     void MyGetData() {
         Thread thread = new Thread(new ThreadStart(DataThread));

@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 3594533136241919790}
   - component: {fileID: 2460522995409344328}
   - component: {fileID: 8978845062172488936}
+  - component: {fileID: 9094417140126611213}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -137,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6313201c14711094a981617384cde3bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 5.5
+  jumpPower: 4.8
   isMove: 1
   isJump: 1
 --- !u!50 &3594533136241919786
@@ -983,6 +984,21 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.234375, y: 0.828125}
   m_Direction: 0
+--- !u!114 &9094417140126611213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3594533136241919777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d93e312b2fe4224fbced961791644ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invokeDst: 1
+  soundID: PlayerFootStep
+  volume: 1
 --- !u!1 &8132919959134989297
 GameObject:
   m_ObjectHideFlags: 0

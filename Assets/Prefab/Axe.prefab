@@ -203,6 +203,8 @@ MonoBehaviour:
     attackSpeed: 0.3
     bullet: 0
     type: 3
+  soundID: AttackMelee
+  volume: 1
   offset: {x: 0.75, y: 0}
   attackSize: {x: 1.5, y: 2.58}
 --- !u!61 &3027900907588204918

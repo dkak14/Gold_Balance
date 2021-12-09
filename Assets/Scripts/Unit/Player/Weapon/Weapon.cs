@@ -6,6 +6,8 @@ public class Weapon : PickUpObject
 {
     [SerializeField]protected float attackCul;
     public WeaponData weaponData;
+    [SerializeField] protected string soundID;
+    [SerializeField] protected float volume = 1;
     protected float culTimeValue { get { return Mathf.InverseLerp(0, weaponData.attackSpeed, attackCul); } }
 
     Coroutine shakeRoutine;

@@ -39,6 +39,7 @@ public class Axe : Weapon
             if (!attack) {
                 attack = true;
                 Collider2D[] hits = Physics2D.OverlapBoxAll((Vector2)unitController.transform.position + attackOffset, attackSize, 0, 1 << LayerMask.NameToLayer("Enemy"));
+                SoundManager.Instance.PlayOneShot(SoundType.SFX, soundID, volume);
                 for (int i = 0; i < hits.Length; i++) {
                     UnitControllerBase unit;
                     if (hits[i].TryGetComponent(out unit)) {
@@ -77,6 +78,11 @@ public class Axe : Weapon
         AttackDelayEnd();
     }
     void AttackDelayEnd() {
+        if (!unitMoveController)
+            pickUpController.TryGetComponent(out unitMoveController);
+        if (!unitAnimator)
+            pickUpController.TryGetComponent(out unitAnimator);
+
         unitMoveController.isMove = true;
         unitMoveController.isJump = true;
         unitAnimator.speed = 1;

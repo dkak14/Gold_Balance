@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DialogData", menuName = "SO/DialogData", order = 1)]
 public class SODialogData : ScriptableObject
 {
-    public List<DialogData> dialogData = new List<DialogData>();
-    public List<CharacterData> characterDatas = new List<CharacterData>();
+    public List<DialogData> dialogData;
+    public List<CharacterData> characterDatas;
     [SerializeField] Dictionary<int, DialogData> dialogDataDic;
     [SerializeField] Dictionary<int, CharacterData> characterDataDic;
     public void DataUpdate() {

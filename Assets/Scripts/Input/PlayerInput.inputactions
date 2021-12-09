@@ -239,6 +239,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "P",
+                    "type": "Button",
+                    "id": "615ce7c3-0bf2-4d9e-b9ca-78d181357cd3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -349,6 +357,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "W",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a5193a5e-f878-46e8-b231-a37741bf9021",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "P",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

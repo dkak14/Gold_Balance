@@ -34,6 +34,7 @@ public class ZombieController : EnemyController
     }
 
     public override void Attack() {
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, "ZombieAttack", 1);
         Collider2D[] hits = Physics2D.OverlapBoxAll((Vector2)transform.position + attackOffset, attackSize, 0, playerLayerMask);
         for (int i = 0; i < hits.Length; i++) {
             UnitControllerBase unit;
@@ -41,6 +42,14 @@ public class ZombieController : EnemyController
                 unit.Damaged(damage, this, WeaponType.NULL);
             }
         }
+    }
+    protected override void damaged(int damage, UnitControllerBase attacker, WeaponType type) {
+        base.damaged(damage, attacker, type);
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, "ZombieDamaged", 1);
+    }
+    protected override void die() {
+        base.die();
+        SoundManager.Instance.PlayOneShot(SoundType.SFX, "ZombieDie", 1);
     }
     protected override void OnDrawGizmos() {
         base.OnDrawGizmos();

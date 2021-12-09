@@ -13,7 +13,21 @@ MonoBehaviour:
   m_Name: StageData
   m_EditorClassIdentifier: 
   stageDatas:
+  - sceneName: Bar
+    bgm: Bar
+    isJoin: 0
   - sceneName: Stage1
+    bgm: Stage1
     isJoin: 1
   - sceneName: Stage2
+    bgm: Stage1
+    isJoin: 0
+  - sceneName: BossStage
+    bgm: Boss1
+    isJoin: 0
+  - sceneName: Ending
+    bgm: Ending
+    isJoin: 0
+  - sceneName: Main
+    bgm: Main
     isJoin: 0

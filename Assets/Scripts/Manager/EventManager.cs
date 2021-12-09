@@ -13,6 +13,8 @@ public class EventManager : Singleton<EventManager>
     public Action<PlayerController> PlayerDie = delegate { };
     public Action<string> TriggerEventMessage = delegate { };
 
-    public Action<string> SceneChangeStart = delegate { };
-    public Action SceneChangeEnd = delegate { };
+    public Action<string, string> SceneChangeStart = delegate { };
+    public Action<string, string> SceneChangeEnd = delegate { };
+
+    public Action ClickSettingButton = delegate { };
 }

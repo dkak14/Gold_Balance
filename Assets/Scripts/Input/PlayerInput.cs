@@ -252,6 +252,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""P"",
+                    ""type"": ""Button"",
+                    ""id"": ""615ce7c3-0bf2-4d9e-b9ca-78d181357cd3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -364,6 +372,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""W"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a5193a5e-f878-46e8-b231-a37741bf9021"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""P"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -391,6 +410,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_KeyBoard_Q = m_KeyBoard.FindAction("Q", throwIfNotFound: true);
         m_KeyBoard_S = m_KeyBoard.FindAction("S", throwIfNotFound: true);
         m_KeyBoard_W = m_KeyBoard.FindAction("W", throwIfNotFound: true);
+        m_KeyBoard_P = m_KeyBoard.FindAction("P", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -540,6 +560,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_KeyBoard_Q;
     private readonly InputAction m_KeyBoard_S;
     private readonly InputAction m_KeyBoard_W;
+    private readonly InputAction m_KeyBoard_P;
     public struct KeyBoardActions
     {
         private @PlayerInput m_Wrapper;
@@ -554,6 +575,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Q => m_Wrapper.m_KeyBoard_Q;
         public InputAction @S => m_Wrapper.m_KeyBoard_S;
         public InputAction @W => m_Wrapper.m_KeyBoard_W;
+        public InputAction @P => m_Wrapper.m_KeyBoard_P;
         public InputActionMap Get() { return m_Wrapper.m_KeyBoard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -593,6 +615,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @W.started -= m_Wrapper.m_KeyBoardActionsCallbackInterface.OnW;
                 @W.performed -= m_Wrapper.m_KeyBoardActionsCallbackInterface.OnW;
                 @W.canceled -= m_Wrapper.m_KeyBoardActionsCallbackInterface.OnW;
+                @P.started -= m_Wrapper.m_KeyBoardActionsCallbackInterface.OnP;
+                @P.performed -= m_Wrapper.m_KeyBoardActionsCallbackInterface.OnP;
+                @P.canceled -= m_Wrapper.m_KeyBoardActionsCallbackInterface.OnP;
             }
             m_Wrapper.m_KeyBoardActionsCallbackInterface = instance;
             if (instance != null)
@@ -627,6 +652,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @W.started += instance.OnW;
                 @W.performed += instance.OnW;
                 @W.canceled += instance.OnW;
+                @P.started += instance.OnP;
+                @P.performed += instance.OnP;
+                @P.canceled += instance.OnP;
             }
         }
     }
@@ -654,5 +682,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnQ(InputAction.CallbackContext context);
         void OnS(InputAction.CallbackContext context);
         void OnW(InputAction.CallbackContext context);
+        void OnP(InputAction.CallbackContext context);
     }
 }

@@ -11,9 +11,17 @@ public class PlayerController : UnitControllerBase
         animator.SetBool("isDie", true);
         EventManager.Instance.PlayerDie(this);
     }
+    void DebugP(UnityEngine.InputSystem.InputAction.CallbackContext context) {
+        HP += 1000;
+    }
+    protected override void OnDestroy() {
+        base.OnDestroy();
+        playerInputController.GetInputAction("P").inputAction.started -= DebugP;
+    }
     public override void Initialization() {
         base.Initialization();
         TryGetComponent(out animController);
         TryGetComponent(out animator);
+        playerInputController.GetInputAction("P").inputAction.started += DebugP;
     }
 }
