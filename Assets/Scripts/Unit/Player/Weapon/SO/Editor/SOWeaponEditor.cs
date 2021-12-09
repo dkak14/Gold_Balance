@@ -14,6 +14,8 @@ public class SOWeaponEditor : Editor
     readonly string URL = 
         "https://docs.google.com/spreadsheets/d/1bODkhVYnj8Rgi53SUSNJHVa1DdGwU4Zs/export?format=csv";
     SOWeapon soWeapon;
+
+    Queue<List<WeaponData>> threadWeaponData = new Queue<List<WeaponData>>();
     private void OnEnable() {
         soWeapon = (SOWeapon)target;
     }
@@ -44,7 +46,11 @@ public class SOWeaponEditor : Editor
                 }
             }
         }
+        if(threadWeaponData.Count > 0) {
+            soWeapon.weaponData = threadWeaponData.Dequeue();
+        }
         base.OnInspectorGUI();
+        serializedObject.ApplyModifiedProperties();
     }
     IEnumerator DataUpdate() {
         Debug.Log("시트데이터 받아오는 중");
@@ -83,7 +89,7 @@ public class SOWeaponEditor : Editor
         var data = wc.DownloadString(url);
         Debug.Log(data);
         string[] row = data.Split('\n');
-        soWeapon.weaponData = new List<WeaponData>();
+        List<WeaponData> weaponData = new List<WeaponData>();
         for (int i = 2; i < row.Length; i++) {
             string[] column = row[i].Split(',');
             string name = column[0];
@@ -93,9 +99,9 @@ public class SOWeaponEditor : Editor
             float reloading = float.Parse(column[4]);
             float attackSpeed = float.Parse(column[5]);
             int bullet = int.Parse(column[6]);
-            soWeapon.weaponData.Add(new WeaponData(name, id, damage, reloading, attackSpeed, bullet, type));
-
+            weaponData.Add(new WeaponData(name, id, damage, reloading, attackSpeed, bullet, type));
         }
+        threadWeaponData.Enqueue(weaponData);
     }
 }
 public class MyWebClient {

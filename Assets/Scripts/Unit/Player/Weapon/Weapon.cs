@@ -47,6 +47,10 @@ public class Weapon : PickUpObject
             CinemachineBrain brain = mainCamera.GetComponent<CinemachineBrain>();
             CinemachineVirtualCamera CVC = brain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
             noise = CVC.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+            if (shakeRoutine != null) {
+                StopCoroutine(shakeRoutine);
+            }
             shakeRoutine = StartCoroutine(C_Shake(noise));
         }
     }

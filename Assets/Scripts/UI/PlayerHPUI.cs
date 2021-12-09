@@ -19,8 +19,15 @@ public class PlayerHPUI : MonoBehaviour
             hpText.text = player.HP + "/" + player.MaxHP;
         }
     }
-    void UIUpdate(int hp) {
+    void UIUpdate(int before, int hp) {
         hpText.text = player.HP + "/" + player.MaxHP;
+        if(before > hp) {
+            if(hpBarRoutine != null)
+            StopCoroutine(hpBarRoutine);
+
+            float value = (float)(player.HP) / player.MaxHP;
+            hpBar.fillAmount = value;
+        }
 
         if (hpBarRoutine == null) {
             hpBarRoutine = StartCoroutine(C_HPBar());

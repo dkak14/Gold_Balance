@@ -173,7 +173,7 @@ public class BossController : EnemyController
             }
         }
     }
-    void PhaseTwoCondition(int hp) {
+    void PhaseTwoCondition(int before,int hp) {
         if (phaseIndex != 2) {
             if (hp <= (MaxHP * 0.4f)) {
                 EventManager.Instance.TriggerEventMessage("Phase2Start");

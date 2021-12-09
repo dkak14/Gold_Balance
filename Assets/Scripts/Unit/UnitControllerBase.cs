@@ -11,8 +11,8 @@ public class UnitControllerBase : MonoBehaviour, IInitialization {
     public int MaxHP { get { return maxHp; } set { maxHp = value; maxHp = Mathf.Max(maxHp, 0); maxHPValueChange(maxHp); } }
     public Action<int> maxHPValueChange = delegate{};
     [SerializeField] int hp;
-    public int HP { get { return hp; } set { hp = value; hp = Mathf.Max(hp, 0); hpValueChange(hp); } }
-    public Action<int> hpValueChange = delegate { };
+    public int HP { get { return hp; } set { int before = hp; hp = value; hp = Mathf.Max(hp, 0); hpValueChange(before,hp); } }
+    public Action<int,int> hpValueChange = delegate { };
     [SerializeField] float speed;
     public float Speed { get { return speed; } set { speed = value; speed = Mathf.Max(speed, 0); speedValueChange(speed); } }
     public Action<float> speedValueChange = delegate { };
